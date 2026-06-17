@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechSupport - Gestão Integrada de Suporte Técnico</title>
+    <meta name="description" content="Dashboard de Gestão de Chamados e Operações de Suporte Técnico.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- SIDEBAR (NAVEGAÇÃO LATERAL)                                  -->
+<!-- ============================================================ -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-wrapper">
+            <div class="brand-icon">
+                <span class="material-symbols-outlined fill-icon">precision_manufacturing</span>
+            </div>
+            <div class="brand-info">
+                <h1>TechSupport</h1>
+                <span>Gestão Integrada</span>
+            </div>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a href="#" class="nav-link active" data-section="dashboard" id="navDashboard">
+            <span class="material-symbols-outlined fill-icon">dashboard</span>
+            Dashboard
+        </a>
+        <a href="#" class="nav-link" data-section="tickets" id="navTickets">
+            <span class="material-symbols-outlined">confirmation_number</span>
+            Chamados
+        </a>
+        <a href="#" class="nav-link" data-section="teams" id="navTeams">
+            <span class="material-symbols-outlined">group</span>
+            Equipes
+        </a>
+        <a href="#" class="nav-link" data-section="reports" id="navReports">
+            <span class="material-symbols-outlined">assessment</span>
+            Relatórios
+        </a>
+        <a href="#" class="nav-link" data-section="settings" id="navSettings">
+            <span class="material-symbols-outlined">settings</span>
+            Configurações
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <a href="#" class="nav-link" data-section="settings">
+            <span class="material-symbols-outlined">help</span>
+            Ajuda
+        </a>
+        <a href="#" class="nav-link" id="navLogout">
+            <span class="material-symbols-outlined">logout</span>
+            Sair
+        </a>
+    </div>
+</aside>
+
+<!-- Overlay da Sidebar (Mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ============================================================ -->
+<!-- LAYOUT PRINCIPAL                                             -->
+<!-- ============================================================ -->
+<div class="main-layout">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu lateral">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="search-bar">
+                <span class="material-symbols-outlined search-icon">search</span>
+                <input type="text" class="search-input" placeholder="Buscar chamados, técnicos ou ID..." aria-label="Buscar chamados">
+            </div>
+        </div>
+
+        <div class="topbar-right">
+            <div class="notification-area">
+                <button class="btn-icon" aria-label="Notificações">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="notification-badge"></span>
+                </button>
+            </div>
+            <div class="user-profile">
+                <div class="user-info">
+                    <p class="user-name" id="displayUserName">Samara Alexandria</p>
+                    <p class="user-role" id="displayUserRole">Admin TI</p>
+                </div>
+                <img class="user-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBT_GwGWJU9rRTwM-2318MHVEEmJEYW6NC0Rzu493EczH1lm4wlWZDg2SgKNIJOsA7VhwgcHKXmypYg-IeDai9Q8bQJFKaniyeNMj8p37KUL6kFL_TV3ik3P5W434tZDOgVqNLezXDQsVa4BqgJMBbW0KXYqXA4OiGyGqa4ykN8ykiWO6pzgGYHH4k32VgJnA7tScLD9yOnxEfuNAEMsICWxzi-ON11fNTkqkg33xzOga6ylG1ov7O4tVpnWYvAZgjqtOEz-xmxTwU" alt="Avatar de Samara Alexandria">
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+
+        <!-- Cabeçalho da Página (dinâmico) -->
+        <div class="page-header">
+            <div>
+                <h2 id="pageTitle">Painel Geral</h2>
+                <p id="pageSubtitle">Status das operações em tempo real.</p>
+            </div>
+            <div id="btnNewTicketWrapper">
+                <button class="btn btn-primary" id="btnNewTicket">
+                    <span class="material-symbols-outlined">add</span>
+                    NOVO CHAMADO
+                </button>
+            </div>
+            <div id="btnNewMemberWrapper" class="hidden">
+                <button class="btn btn-primary" id="btnNewMember">
+                    <span class="material-symbols-outlined">person_add</span>
+                    NOVO MEMBRO
+                </button>
+            </div>
+        </div>
+
+        <!-- ================================================== -->
+        <!-- SEÇÃO: DASHBOARD                                    -->
+        <!-- ================================================== -->
+        <section id="sec-dashboard" class="app-section">
+
+            <!-- Métricas e Gráficos -->
+            <div class="dashboard-grid" aria-label="Métricas e Análises">
+                <div class="status-column">
+
+                    <article class="card status-card status-card-primary">
+                        <div>
+                            <p class="status-card-label">Chamados Abertos</p>
+                            <h3 class="status-card-value" id="countAbertos">124</h3>
+                            <p class="status-card-trend trend-up">
+                                <span class="material-symbols-outlined">trending_up</span> +8%
+                            </p>
+                        </div>
+                        <div class="status-card-icon">
+                            <span class="material-symbols-outlined">assignment</span>
+                        </div>
+                    </article>
+
+                    <article class="card status-card status-card-secondary">
+                        <div>
+                            <p class="status-card-label">Em Atendimento</p>
+                            <h3 class="status-card-value" id="countAtendimento">42</h3>
+                            <p class="status-card-trend trend-active">
+                                <span class="material-symbols-outlined">sync</span> Ativos
+                            </p>
+                        </div>
+                        <div class="status-card-icon">
+                            <span class="material-symbols-outlined">engineering</span>
+                        </div>
+                    </article>
+
+                    <article class="card status-card status-card-tertiary">
+                        <div>
+                            <p class="status-card-label">Aguardando Peças</p>
+                            <h3 class="status-card-value" id="countPecas">18</h3>
+                            <p class="status-card-trend trend-waiting">
+                                <span class="material-symbols-outlined">pause_circle</span> Logística
+                            </p>
+                        </div>
+                        <div class="status-card-icon">
+                            <span class="material-symbols-outlined">inventory_2</span>
+                        </div>
+                    </article>
+
+                    <article class="card status-card status-card-success">
+                        <div>
+                            <p class="status-card-label">Concluídos Hoje</p>
+                            <h3 class="status-card-value">86</h3>
+                            <p class="status-card-trend trend-success">
+                                <span class="material-symbols-outlined">task_alt</span> 92% SLA
+                            </p>
+                        </div>
+                        <div class="status-card-icon">
+                            <span class="material-symbols-outlined">check_circle</span>
+                        </div>
+                    </article>
+
+                    <!-- Gráfico SLA -->
+                    <article class="card chart-card-full">
+                        <div class="chart-header">
+                            <h4 class="chart-title">Tendência de Resolutividade (SLA)</h4>
+                            <span class="chart-subtitle">Últimos 7 dias</span>
+                        </div>
+                        <div class="line-chart">
+                            <div class="chart-bar-col" style="height:85%"><div class="chart-tooltip">85%</div></div>
+                            <div class="chart-bar-col" style="height:78%"><div class="chart-tooltip">78%</div></div>
+                            <div class="chart-bar-col" style="height:92%"><div class="chart-tooltip">92%</div></div>
+                            <div class="chart-bar-col" style="height:88%"><div class="chart-tooltip">88%</div></div>
+                            <div class="chart-bar-col" style="height:95%"><div class="chart-tooltip">95%</div></div>
+                            <div class="chart-bar-col" style="height:82%"><div class="chart-tooltip">82%</div></div>
+                            <div class="chart-bar-col active" style="height:92%"><div class="chart-tooltip">92%</div></div>
+                        </div>
+                        <div class="chart-x-axis">
+                            <span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span><span>DOM</span>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Volume por Categoria -->
+                <div class="volume-column">
+                    <article class="card volume-chart-card">
+                        <h4 class="chart-title" style="margin-bottom:var(--spacing-md);">Volume por Categoria</h4>
+                        <div class="volume-list">
+                            <div class="volume-item">
+                                <div class="volume-item-header">
+                                    <span class="volume-item-label">TI / Informática</span>
+                                    <span class="volume-item-value-primary">45</span>
+                                </div>
+                                <div class="volume-track"><div class="volume-bar volume-bar-primary" style="width:65%"></div></div>
+                            </div>
+                            <div class="volume-item">
+                                <div class="volume-item-header">
+                                    <span class="volume-item-label">Elétrica</span>
+                                    <span class="volume-item-value-secondary">28</span>
+                                </div>
+                                <div class="volume-track"><div class="volume-bar volume-bar-secondary" style="width:40%"></div></div>
+                            </div>
+                            <div class="volume-item">
+                                <div class="volume-item-header">
+                                    <span class="volume-item-label">Predial</span>
+                                    <span class="volume-item-value-success">32</span>
+                                </div>
+                                <div class="volume-track"><div class="volume-bar volume-bar-success" style="width:50%"></div></div>
+                            </div>
+                            <div class="volume-item">
+                                <div class="volume-item-header">
+                                    <span class="volume-item-label">Segurança</span>
+                                    <span class="volume-item-value-error">12</span>
+                                </div>
+                                <div class="volume-track"><div class="volume-bar volume-bar-error" style="width:20%"></div></div>
+                            </div>
+                            <div class="volume-item">
+                                <div class="volume-item-header">
+                                    <span class="volume-item-label">Telecom</span>
+                                    <span class="volume-item-value-tertiary">7</span>
+                                </div>
+                                <div class="volume-track"><div class="volume-bar volume-bar-tertiary" style="width:12%"></div></div>
+                            </div>
+                        </div>
+                        <button class="volume-footer-btn" data-section="reports">Ver Relatório Completo</button>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Filtros -->
+            <div class="category-filters">
+                <button class="filter-btn active"><span class="material-symbols-outlined">filter_list</span> Todos</button>
+                <button class="filter-btn"><span class="filter-dot dot-primary"></span> Informática/TI</button>
+                <button class="filter-btn"><span class="filter-dot dot-secondary"></span> Elétrica</button>
+                <button class="filter-btn"><span class="filter-dot dot-success"></span> Predial/Civil</button>
+                <button class="filter-btn"><span class="filter-dot dot-error"></span> Segurança Eletrônica</button>
+                <button class="filter-btn"><span class="filter-dot dot-tertiary"></span> Telecomunicações</button>
+            </div>
+
+            <!-- Tabela de Chamados Recentes -->
+            <section class="tickets-container">
+                <div class="tickets-header">
+                    <h4>Chamados Recentes</h4>
+                    <div class="tickets-control">
+                        <span>Mostrar:</span>
+                        <select class="select-custom"><option>Últimos 10</option><option>Últimos 25</option><option>Ver Todos</option></select>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="ticket-table">
+                        <thead>
+                            <tr>
+                                <th style="width:120px;">ID / Ticket</th>
+                                <th>Assunto</th>
+                                <th style="width:180px;">Categoria</th>
+                                <th style="width:120px;text-align:center;">Prioridade</th>
+                                <th style="width:140px;">Status</th>
+                                <th style="width:160px;text-align:right;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ticketTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="tickets-footer">
+                    <span class="tickets-footer-info" id="footerInfo">Carregando...</span>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="btnPrevPage" aria-label="Página anterior" disabled>
+                            <span class="material-symbols-outlined" style="font-size:18px;">chevron_left</span>
+                        </button>
+                        <div id="paginationNumbers" style="display:flex;gap:4px;"></div>
+                        <button class="pagination-btn" id="btnNextPage" aria-label="Próxima página">
+                            <span class="material-symbols-outlined" style="font-size:18px;">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- SEÇÃO: CHAMADOS (TELA COMPLETA)                    -->
+        <!-- ================================================== -->
+        <section id="sec-tickets" class="app-section hidden">
+            <!-- Filtros de Categoria -->
+            <div class="category-filters">
+                <button class="filter-btn active"><span class="material-symbols-outlined">filter_list</span> Todos</button>
+                <button class="filter-btn"><span class="filter-dot dot-primary"></span> Informática/TI</button>
+                <button class="filter-btn"><span class="filter-dot dot-secondary"></span> Elétrica</button>
+                <button class="filter-btn"><span class="filter-dot dot-success"></span> Predial/Civil</button>
+                <button class="filter-btn"><span class="filter-dot dot-error"></span> Segurança Eletrônica</button>
+                <button class="filter-btn"><span class="filter-dot dot-tertiary"></span> Telecomunicações</button>
+            </div>
+
+            <section class="tickets-container">
+                <div class="tickets-header">
+                    <h4>Todos os Chamados</h4>
+                    <div class="tickets-control">
+                        <span id="ticketsTotal">18 chamados cadastrados</span>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="ticket-table">
+                        <thead>
+                            <tr>
+                                <th style="width:120px;">ID / Ticket</th>
+                                <th>Assunto</th>
+                                <th style="width:180px;">Categoria</th>
+                                <th style="width:120px;text-align:center;">Prioridade</th>
+                                <th style="width:140px;">Status</th>
+                                <th style="width:160px;text-align:right;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ticketTableBody2"></tbody>
+                    </table>
+                </div>
+                <div class="tickets-footer">
+                    <span class="tickets-footer-info" id="footerInfo2">Carregando...</span>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="btnPrevPage2" aria-label="Página anterior" disabled>
+                            <span class="material-symbols-outlined" style="font-size:18px;">chevron_left</span>
+                        </button>
+                        <div id="paginationNumbers2" style="display:flex;gap:4px;"></div>
+                        <button class="pagination-btn" id="btnNextPage2" aria-label="Próxima página">
+                            <span class="material-symbols-outlined" style="font-size:18px;">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- SEÇÃO: EQUIPES                                      -->
+        <!-- ================================================== -->
+        <section id="sec-teams" class="app-section hidden">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--spacing-md);">
+                <p style="font-size:14px;color:var(--color-on-surface-variant);">
+                    Total: <strong id="teamMemberCount">5 membros</strong>
+                </p>
+            </div>
+            <div class="team-grid" id="teamGrid">
+                <!-- Renderizado via JS -->
+            </div>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- SEÇÃO: RELATÓRIOS                                   -->
+        <!-- ================================================== -->
+        <section id="sec-reports" class="app-section hidden">
+
+            <!-- Cards de Indicadores -->
+            <div class="reports-grid">
+                <article class="card report-stat-card">
+                    <div class="report-stat-icon report-stat-icon-primary">
+                        <span class="material-symbols-outlined">confirmation_number</span>
+                    </div>
+                    <p class="report-stat-value">342</p>
+                    <p class="report-stat-label">Chamados no Mês</p>
+                    <p class="report-stat-change up">
+                        <span class="material-symbols-outlined">trending_up</span> +12% vs. mês anterior
+                    </p>
+                </article>
+                <article class="card report-stat-card">
+                    <div class="report-stat-icon report-stat-icon-success">
+                        <span class="material-symbols-outlined">task_alt</span>
+                    </div>
+                    <p class="report-stat-value">91%</p>
+                    <p class="report-stat-label">SLA Cumprido</p>
+                    <p class="report-stat-change up">
+                        <span class="material-symbols-outlined">trending_up</span> +3% vs. meta
+                    </p>
+                </article>
+                <article class="card report-stat-card">
+                    <div class="report-stat-icon report-stat-icon-warning">
+                        <span class="material-symbols-outlined">schedule</span>
+                    </div>
+                    <p class="report-stat-value">2.4h</p>
+                    <p class="report-stat-label">Tempo Médio de Resposta</p>
+                    <p class="report-stat-change down">
+                        <span class="material-symbols-outlined">trending_down</span> -0.3h vs. semana passada
+                    </p>
+                </article>
+                <article class="card report-stat-card">
+                    <div class="report-stat-icon report-stat-icon-error">
+                        <span class="material-symbols-outlined">report_problem</span>
+                    </div>
+                    <p class="report-stat-value">9</p>
+                    <p class="report-stat-label">Chamados Críticos Abertos</p>
+                    <p class="report-stat-change down">
+                        <span class="material-symbols-outlined">trending_down</span> -2 vs. ontem
+                    </p>
+                </article>
+            </div>
+
+            <!-- Desempenho por Técnico -->
+            <div class="card" style="padding:var(--spacing-lg);margin-bottom:var(--spacing-lg);">
+                <h3 class="report-section-title">Desempenho por Técnico — Junho 2026</h3>
+                <div class="table-responsive">
+                    <table class="report-tech-table">
+                        <thead>
+                            <tr>
+                                <th>Técnico</th>
+                                <th>Especialidade</th>
+                                <th>Resolvidos</th>
+                                <th>Em Aberto</th>
+                                <th style="width:200px;">SLA Cumprido</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Carlos Mendes</strong></td>
+                                <td>Informática/TI</td>
+                                <td>87</td>
+                                <td>3</td>
+                                <td>
+                                    <div style="display:flex;align-items:center;gap:8px;">
+                                        <div class="sla-bar-track" style="flex-grow:1;"><div class="sla-bar-fill" style="width:96%;"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--color-primary);">96%</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ana Ferreira</strong></td>
+                                <td>Elétrica</td>
+                                <td>72</td>
+                                <td>5</td>
+                                <td>
+                                    <div style="display:flex;align-items:center;gap:8px;">
+                                        <div class="sla-bar-track" style="flex-grow:1;"><div class="sla-bar-fill" style="width:89%;"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--color-primary);">89%</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Roberto Souza</strong></td>
+                                <td>Predial/Civil</td>
+                                <td>61</td>
+                                <td>2</td>
+                                <td>
+                                    <div style="display:flex;align-items:center;gap:8px;">
+                                        <div class="sla-bar-track" style="flex-grow:1;"><div class="sla-bar-fill" style="width:93%;"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--color-primary);">93%</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Juliana Oliveira</strong></td>
+                                <td>Segurança Eletrônica</td>
+                                <td>45</td>
+                                <td>4</td>
+                                <td>
+                                    <div style="display:flex;align-items:center;gap:8px;">
+                                        <div class="sla-bar-track" style="flex-grow:1;"><div class="sla-bar-fill" style="width:82%;"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--color-primary);">82%</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Marcos Lima</strong></td>
+                                <td>Telecomunicações</td>
+                                <td>38</td>
+                                <td>1</td>
+                                <td>
+                                    <div style="display:flex;align-items:center;gap:8px;">
+                                        <div class="sla-bar-track" style="flex-grow:1;"><div class="sla-bar-fill" style="width:97%;"></div></div>
+                                        <span style="font-size:12px;font-weight:700;color:var(--color-primary);">97%</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Volume por Categoria -->
+            <div class="card" style="padding:var(--spacing-lg);">
+                <h3 class="report-section-title">Volume por Categoria — Últimos 30 dias</h3>
+                <div style="display:flex;flex-direction:column;gap:var(--spacing-md);">
+                    <div class="volume-item">
+                        <div class="volume-item-header">
+                            <span class="volume-item-label">TI / Informática</span>
+                            <span class="volume-item-value-primary">142 chamados</span>
+                        </div>
+                        <div class="volume-track"><div class="volume-bar volume-bar-primary" style="width:78%"></div></div>
+                    </div>
+                    <div class="volume-item">
+                        <div class="volume-item-header">
+                            <span class="volume-item-label">Elétrica</span>
+                            <span class="volume-item-value-secondary">87 chamados</span>
+                        </div>
+                        <div class="volume-track"><div class="volume-bar volume-bar-secondary" style="width:48%"></div></div>
+                    </div>
+                    <div class="volume-item">
+                        <div class="volume-item-header">
+                            <span class="volume-item-label">Predial / Civil</span>
+                            <span class="volume-item-value-success">65 chamados</span>
+                        </div>
+                        <div class="volume-track"><div class="volume-bar volume-bar-success" style="width:36%"></div></div>
+                    </div>
+                    <div class="volume-item">
+                        <div class="volume-item-header">
+                            <span class="volume-item-label">Segurança Eletrônica</span>
+                            <span class="volume-item-value-error">32 chamados</span>
+                        </div>
+                        <div class="volume-track"><div class="volume-bar volume-bar-error" style="width:18%"></div></div>
+                    </div>
+                    <div class="volume-item">
+                        <div class="volume-item-header">
+                            <span class="volume-item-label">Telecomunicações</span>
+                            <span class="volume-item-value-tertiary">16 chamados</span>
+                        </div>
+                        <div class="volume-track"><div class="volume-bar volume-bar-tertiary" style="width:9%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================== -->
+        <!-- SEÇÃO: CONFIGURAÇÕES                                -->
+        <!-- ================================================== -->
+        <section id="sec-settings" class="app-section hidden">
+            <form id="formSettings">
+                <div class="settings-grid">
+
+                    <!-- Perfil do Admin -->
+                    <div class="card settings-card">
+                        <h3 class="settings-card-title">
+                            <span class="material-symbols-outlined">manage_accounts</span>
+                            Perfil do Administrador
+                        </h3>
+                        <div class="form-group">
+                            <label for="settingName">Nome completo</label>
+                            <input type="text" id="settingName" class="form-input" value="Samara Alexandria">
+                        </div>
+                        <div class="form-group">
+                            <label for="settingEmail">E-mail</label>
+                            <input type="email" id="settingEmail" class="form-input" value="s.alexandria@tech.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="settingRole">Cargo</label>
+                            <input type="text" id="settingRole" class="form-input" value="Admin TI">
+                        </div>
+                    </div>
+
+                    <!-- Notificações -->
+                    <div class="card settings-card">
+                        <h3 class="settings-card-title">
+                            <span class="material-symbols-outlined">notifications_active</span>
+                            Notificações
+                        </h3>
+                        <div class="setting-toggle-row">
+                            <div class="setting-toggle-row-info">
+                                <span class="setting-toggle-name">Novos chamados</span>
+                                <span class="setting-toggle-desc">Receber alerta ao abrir novo chamado</span>
+                            </div>
+                            <div class="toggle-switch">
+                                <span class="toggle-label">Ativado</span>
+                                <input type="checkbox" id="notifNew" checked>
+                            </div>
+                        </div>
+                        <div class="setting-toggle-row">
+                            <div class="setting-toggle-row-info">
+                                <span class="setting-toggle-name">Chamados críticos</span>
+                                <span class="setting-toggle-desc">Notificação prioritária para prioridade Crítica</span>
+                            </div>
+                            <div class="toggle-switch">
+                                <span class="toggle-label">Ativado</span>
+                                <input type="checkbox" id="notifCritical" checked>
+                            </div>
+                        </div>
+                        <div class="setting-toggle-row">
+                            <div class="setting-toggle-row-info">
+                                <span class="setting-toggle-name">Resumo diário por e-mail</span>
+                                <span class="setting-toggle-desc">Relatório diário com indicadores</span>
+                            </div>
+                            <div class="toggle-switch">
+                                <span class="toggle-label">Desativado</span>
+                                <input type="checkbox" id="notifEmail">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preferências do Sistema -->
+                    <div class="card settings-card">
+                        <h3 class="settings-card-title">
+                            <span class="material-symbols-outlined">tune</span>
+                            Preferências do Sistema
+                        </h3>
+                        <div class="setting-toggle-row">
+                            <div class="setting-toggle-row-info">
+                                <span class="setting-toggle-name">Modo escuro</span>
+                                <span class="setting-toggle-desc">Alterar aparência da interface</span>
+                            </div>
+                            <div class="toggle-switch">
+                                <span class="toggle-label">Desativado</span>
+                                <input type="checkbox" id="darkMode">
+                            </div>
+                        </div>
+                        <div class="setting-toggle-row">
+                            <div class="setting-toggle-row-info">
+                                <span class="setting-toggle-name">Atualização automática</span>
+                                <span class="setting-toggle-desc">Atualizar lista de chamados a cada 5 min</span>
+                            </div>
+                            <div class="toggle-switch">
+                                <span class="toggle-label">Ativado</span>
+                                <input type="checkbox" id="autoRefresh" checked>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top:var(--spacing-sm);">
+                            <label for="settingRowsPerPage">Chamados por página</label>
+                            <select id="settingRowsPerPage" class="form-select">
+                                <option value="5">5 por página</option>
+                                <option value="10">10 por página</option>
+                                <option value="20">20 por página</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- SLA e Prazos -->
+                    <div class="card settings-card">
+                        <h3 class="settings-card-title">
+                            <span class="material-symbols-outlined">timer</span>
+                            SLA e Prazos
+                        </h3>
+                        <div class="form-group">
+                            <label for="slaCritical">SLA Prioridade Crítica (horas)</label>
+                            <input type="number" id="slaCritical" class="form-input" value="2" min="1" max="24">
+                        </div>
+                        <div class="form-group">
+                            <label for="slaHigh">SLA Prioridade Alta (horas)</label>
+                            <input type="number" id="slaHigh" class="form-input" value="8" min="1" max="72">
+                        </div>
+                        <div class="form-group">
+                            <label for="slaMedium">SLA Prioridade Média (horas)</label>
+                            <input type="number" id="slaMedium" class="form-input" value="24" min="1" max="120">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Botão Salvar -->
+                <div style="display:flex;justify-content:flex-end;margin-top:var(--spacing-xl);">
+                    <button type="submit" class="btn btn-primary">
+                        <span class="material-symbols-outlined">save</span>
+                        SALVAR CONFIGURAÇÕES
+                    </button>
+                </div>
+            </form>
+        </section>
+
+    </main>
+</div>
+
+<!-- ============================================================ -->
+<!-- FAB MOBILE                                                   -->
+<!-- ============================================================ -->
+<div class="fab-container">
+    <button class="btn-fab" id="btnNewTicketFab" aria-label="Novo Chamado">
+        <span class="material-symbols-outlined" style="font-size:32px;">add</span>
+    </button>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODAL: NOVO CHAMADO                                          -->
+<!-- ============================================================ -->
+<div class="modal-overlay" id="modalNewTicket">
+    <div class="modal-container">
+        <header class="modal-header">
+            <h3>Abrir Novo Chamado</h3>
+            <button class="modal-close" id="modalClose" aria-label="Fechar modal">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </header>
+        <form id="formNewTicket">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="ticketSubject">Assunto / Descrição do Problema *</label>
+                    <input type="text" id="ticketSubject" class="form-input" placeholder="Ex: Ar condicionado vazando no bloco B" required>
+                </div>
+                <div class="form-group">
+                    <label for="ticketLocation">Local / Bloco / Sala *</label>
+                    <input type="text" id="ticketLocation" class="form-input" placeholder="Ex: Bloco B, Sala 304" required>
+                </div>
+                <div class="form-group">
+                    <label for="ticketCategory">Categoria</label>
+                    <select id="ticketCategory" class="form-select">
+                        <option value="Informática/TI">Informática / TI</option>
+                        <option value="Elétrica">Elétrica</option>
+                        <option value="Predial/Civil">Predial / Civil</option>
+                        <option value="Segurança Eletrônica">Segurança Eletrônica</option>
+                        <option value="Telecomunicações">Telecomunicações</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ticketPriority">Prioridade</label>
+                    <select id="ticketPriority" class="form-select">
+                        <option value="Média">Média</option>
+                        <option value="Alta">Alta</option>
+                        <option value="Crítica">Crítica</option>
+                    </select>
+                </div>
+            </div>
+            <footer class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btnCancelTicket">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Criar Chamado</button>
+            </footer>
+        </form>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODAL: NOVO MEMBRO DA EQUIPE                                 -->
+<!-- ============================================================ -->
+<div class="modal-overlay" id="modalNewMember">
+    <div class="modal-container">
+        <header class="modal-header">
+            <h3>Adicionar Novo Membro</h3>
+            <button class="modal-close" id="memberModalClose" aria-label="Fechar modal">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </header>
+        <form id="formNewMember">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="memberName">Nome completo *</label>
+                    <input type="text" id="memberName" class="form-input" placeholder="Ex: João Silva" required>
+                </div>
+                <div class="form-group">
+                    <label for="memberRole">Cargo *</label>
+                    <input type="text" id="memberRole" class="form-input" placeholder="Ex: Técnico de Suporte" required>
+                </div>
+                <div class="form-group">
+                    <label for="memberSpecialty">Especialidade</label>
+                    <select id="memberSpecialty" class="form-select">
+                        <option value="Informática/TI">Informática / TI</option>
+                        <option value="Elétrica">Elétrica</option>
+                        <option value="Predial/Civil">Predial / Civil</option>
+                        <option value="Segurança Eletrônica">Segurança Eletrônica</option>
+                        <option value="Telecomunicações">Telecomunicações</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="memberPhone">Telefone</label>
+                    <input type="tel" id="memberPhone" class="form-input" placeholder="(11) 99999-0000">
+                </div>
+                <div class="form-group">
+                    <label for="memberEmail">E-mail</label>
+                    <input type="email" id="memberEmail" class="form-input" placeholder="nome@empresa.com">
+                </div>
+            </div>
+            <footer class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btnCancelMember">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Adicionar Membro</button>
+            </footer>
+        </form>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TOAST DE CONFIGURAÇÕES SALVAS                               -->
+<!-- ============================================================ -->
+<div class="settings-toast" id="settingsToast">
+    <span class="material-symbols-outlined">check_circle</span>
+    Configurações salvas com sucesso!
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

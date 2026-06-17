@@ -1,0 +1,195 @@
+:root {
+    /* Cores do Sistema de Design (Amethyst Professional) */
+    --color-primary: #54418a;
+    --color-primary-container: #6d59a4;
+    --color-primary-fixed: #e9ddff;
+    --color-primary-fixed-dim: #cfbdff;
+    --color-on-primary: #ffffff;
+    --color-on-primary-container: #eadfff;
+    --color-on-primary-fixed: #210655;
+    --color-on-primary-fixed-variant: #4e3a83;
+    --color-inverse-primary: #cfbdff;
+
+    --color-secondary: #51599b;
+    --color-secondary-container: #afb6ff;
+    --color-secondary-fixed: #dfe0ff;
+    --color-secondary-fixed-dim: #bcc2ff;
+    --color-on-secondary: #ffffff;
+    --color-on-secondary-container: #3d4586;
+    --color-on-secondary-fixed: #091255;
+    --color-on-secondary-fixed-variant: #394182;
+
+    --color-tertiary: #514a5d;
+    --color-tertiary-container: #6a6275;
+    --color-tertiary-fixed: #e9def5;
+    --color-tertiary-fixed-dim: #cdc2d9;
+    --color-on-tertiary: #ffffff;
+    --color-on-tertiary-container: #eadff6;
+    --color-on-tertiary-fixed: #1e1929;
+    --color-on-tertiary-fixed-variant: #4a4456;
+
+    --color-error: #ba1a1a;
+    --color-error-container: #ffdad6;
+    --color-on-error: #ffffff;
+    --color-on-error-container: #93000a;
+
+    --color-background: #fbf8ff;
+    --color-on-background: #161a32;
+
+    --color-surface: #fbf8ff;
+    --color-surface-dim: #d5d8f9;
+    --color-surface-bright: #fbf8ff;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f4f2ff;
+    --color-surface-container: #ececff;
+    --color-surface-container-high: #e5e6ff;
+    --color-surface-container-highest: #dee0ff;
+    --color-on-surface: #161a32;
+    --color-on-surface-variant: #494550;
+    --color-inverse-surface: #2b2f48;
+    --color-inverse-on-surface: #f0efff;
+
+    --color-outline: #7a7581;
+    --color-outline-variant: #cac4d1;
+    --color-surface-tint: #66529c;
+
+    /* Cores Auxiliares (SLA, Sucesso e Destaques) */
+    --color-success: #16a34a;
+    --color-success-container: #dcfce7;
+    --color-on-success-container: #15803d;
+    --color-info: #0284c7;
+    --color-info-container: #e0f2fe;
+    --color-on-info-container: #0369a1;
+
+    /* Fontes e Tipografia */
+    --font-family-headline: 'Manrope', sans-serif;
+    --font-family-body: 'Inter', sans-serif;
+
+    /* Arredondamento */
+    --rounded-sm: 0.25rem;       /* 4px */
+    --rounded-md: 0.5rem;        /* 8px */
+    --rounded-lg: 1rem;         /* 16px */
+    --rounded-xl: 1.5rem;       /* 24px */
+    --rounded-full: 9999px;
+
+    /* Espaçamento */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-base: 8px;
+    --spacing-gutter: 24px;
+    --spacing-margin-mobile: 16px;
+    --spacing-margin-desktop: 32px;
+    --spacing-container-max: 1440px;
+
+    /* Sombras Elevadas (Tintadas com Amethyst) */
+    --shadow-sm: 0px 4px 20px rgba(109, 89, 164, 0.08);
+    --shadow-lg: 0px 12px 32px rgba(109, 89, 164, 0.15);
+
+    /* Cartões */
+    --color-card-bg: rgba(255, 255, 255, 0.75);
+    --color-card-border: rgba(224, 215, 240, 0.7);
+
+    /* Sidebar (Menu Lateral) */
+    --color-sidebar-bg: var(--color-primary-container);
+    --color-sidebar-brand: var(--color-on-primary);
+    --color-sidebar-text: rgba(233, 221, 255, 0.8);
+    --color-sidebar-text-muted: rgba(233, 221, 255, 0.7);
+    --color-sidebar-text-active: var(--color-on-primary);
+    --color-sidebar-bg-hover: rgba(233, 221, 255, 0.2);
+    --color-sidebar-bg-active: rgba(233, 221, 255, 0.15);
+    --color-sidebar-border-active: var(--color-primary-fixed);
+    --color-sidebar-icon-bg: var(--color-primary-fixed);
+    --color-sidebar-icon-text: var(--color-primary);
+}
+
+/* ============================================================ */
+/* MODO ESCURO — sobrescreve variáveis de cor quando html.dark   */
+/* ============================================================ */
+html.dark {
+    /* Primária — mais suave no escuro */
+    --color-primary: #cfbdff;
+    --color-primary-container: #4e3a83;
+    --color-primary-fixed: #210655;
+    --color-primary-fixed-dim: #4e3a83;
+    --color-on-primary: #2d1f5e;
+    --color-on-primary-container: #e9ddff;
+    --color-on-primary-fixed: #e9ddff;
+    --color-on-primary-fixed-variant: #cfbdff;
+    --color-inverse-primary: #54418a;
+
+    /* Secundária */
+    --color-secondary: #bcc2ff;
+    --color-secondary-container: #394182;
+    --color-secondary-fixed: #091255;
+    --color-secondary-fixed-dim: #394182;
+    --color-on-secondary: #1e2578;
+    --color-on-secondary-container: #dfe0ff;
+    --color-on-secondary-fixed: #dfe0ff;
+    --color-on-secondary-fixed-variant: #bcc2ff;
+
+    /* Terciária */
+    --color-tertiary: #cdc2d9;
+    --color-tertiary-container: #4a4456;
+    --color-tertiary-fixed: #1e1929;
+    --color-on-tertiary: #362e40;
+    --color-on-tertiary-container: #e9def5;
+    --color-on-tertiary-fixed: #e9def5;
+    --color-on-tertiary-fixed-variant: #cdc2d9;
+
+    /* Erro */
+    --color-error: #ffb4ab;
+    --color-error-container: #93000a;
+    --color-on-error: #690005;
+    --color-on-error-container: #ffdad6;
+
+    /* Background e Surface */
+    --color-background: #101024;
+    --color-on-background: #e5e1f0;
+
+    --color-surface: #101024;
+    --color-surface-dim: #101024;
+    --color-surface-bright: #1e1b33;
+    --color-surface-container-lowest: #0b0a1e;
+    --color-surface-container-low: #161428;
+    --color-surface-container: #1c1a30;
+    --color-surface-container-high: #262139;
+    --color-surface-container-highest: #302b43;
+
+    --color-on-surface: #e5e1f0;
+    --color-on-surface-variant: #cac4d1;
+    --color-inverse-surface: #e5e1f0;
+    --color-inverse-on-surface: #161428;
+
+    /* Outline */
+    --color-outline: #948f9e;
+    --color-outline-variant: #49454f;
+    --color-surface-tint: #cfbdff;
+
+    /* Auxiliares */
+    --color-success: #4ade80;
+    --color-success-container: #14532d;
+    --color-on-success-container: #bbf7d0;
+
+    /* Sombras mais sutis no escuro */
+    --shadow-sm: 0px 4px 20px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0px 12px 32px rgba(0, 0, 0, 0.5);
+
+    /* Cartões no modo escuro */
+    --color-card-bg: rgba(28, 26, 48, 0.9);
+    --color-card-border: rgba(73, 69, 79, 0.6);
+
+    /* Sidebar (Menu Lateral) - Modo Escuro Premium */
+    --color-sidebar-bg: var(--color-surface-container-lowest); /* #0b0a1e - um roxo bem escuro, quase preto, muito elegante */
+    --color-sidebar-brand: var(--color-primary); /* #cfbdff - lilás brilhante */
+    --color-sidebar-text: var(--color-on-surface-variant); /* #cac4d1 - lilás claro acinzentado */
+    --color-sidebar-text-muted: rgba(202, 196, 209, 0.6); /* #cac4d1 a 60% */
+    --color-sidebar-text-active: var(--color-primary); /* #cfbdff - lilás brilhante */
+    --color-sidebar-bg-hover: var(--color-surface-container-low); /* #161428 */
+    --color-sidebar-bg-active: var(--color-surface-container-high); /* #262139 */
+    --color-sidebar-border-active: var(--color-primary); /* #cfbdff */
+    --color-sidebar-icon-bg: var(--color-surface-container-high); /* #262139 */
+    --color-sidebar-icon-text: var(--color-primary); /* #cfbdff */
+}
