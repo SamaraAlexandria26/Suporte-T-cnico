@@ -1,0 +1,124 @@
+# =============================================================
+#  .gitignore — TechSupport | Gestão de Suporte Técnico
+#  Gerado em: 2026-06-17
+# =============================================================
+
+# ─────────────────────────────────────────
+# SISTEMA OPERACIONAL
+# ─────────────────────────────────────────
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+
+# ─────────────────────────────────────────
+# EDITORES E IDEs
+# ─────────────────────────────────────────
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains (WebStorm, IntelliJ)
+.idea/
+*.iml
+
+# Vim / Emacs
+*.swp
+*.swo
+*.orig
+\#*\#
+.#*
+
+# ─────────────────────────────────────────
+# NODE.JS / NPM (caso futuramente adicionado)
+# ─────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.npm
+.yarn/
+
+# ─────────────────────────────────────────
+# BUILD / DIST (caso ferramentas de build sejam adicionadas)
+# ─────────────────────────────────────────
+dist/
+build/
+out/
+.cache/
+.parcel-cache/
+.vite/
+
+# ─────────────────────────────────────────
+# VARIÁVEIS DE AMBIENTE E SEGREDOS
+# ─────────────────────────────────────────
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+*.pem
+*.key
+*.cert
+secrets.json
+config.local.json
+
+# ─────────────────────────────────────────
+# LOGS
+# ─────────────────────────────────────────
+logs/
+*.log
+*.log.*
+log.txt
+
+# ─────────────────────────────────────────
+# ARQUIVOS TEMPORÁRIOS
+# ─────────────────────────────────────────
+tmp/
+temp/
+*.tmp
+*.bak
+*.orig
+*.backup
+
+# ─────────────────────────────────────────
+# AGENTES / FERRAMENTAS DE IA (não vai para o repositório)
+# ─────────────────────────────────────────
+.agents/
+
+# ─────────────────────────────────────────
+# PASTA DE VERSÕES ANTIGAS
+# ─────────────────────────────────────────
+old/
+
+# ─────────────────────────────────────────
+# IMAGENS DE RASCUNHO / CAPTURAS DE TELA LOCAIS
+# (manter screen.png apenas se for asset oficial do projeto)
+# Descomente a linha abaixo se não quiser versionar screenshots
+# ─────────────────────────────────────────
+# screen.png
+
+# ─────────────────────────────────────────
+# ARQUIVOS DE COBERTURA E TESTES
+# ─────────────────────────────────────────
+coverage/
+.nyc_output/
+*.lcov
